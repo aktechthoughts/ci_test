@@ -35,3 +35,10 @@ post-ci-clean:
 	export PATH=$(TEST_CONDA_LOCATION)/bin:$$PATH; hash -r; \
 	conda deactivate; \
 	conda env remove -n $(ENVNAME) || true
+
+
+conda-full-ci:
+	$(call print_status_noprc,Activating conda environment)
+	export PATH=$(TEST_CONDA_LOCATION)/bin:$$PATH; hash -r; \
+	source activate $(ENVNAME); \
+	make full-ci 2>&1 | tee -a $(artefacts_path)/console.log

@@ -1,0 +1,98 @@
+def credentials = "83affe0d-d209-4df1-9d67-66875e265914"
+
+pipeline {
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '10'))
+        timeout(time: 1, unit: 'HOURS')
+        disableConcurrentBuilds()
+        ansiColor('xterm')
+        timestamps()
+    }
+
+    agent { any  }
+
+    environment {
+        RANDOM_SUFFIX = sh(returnStdout: true, script: 'echo $RANDOM').trim()
+        DOCKERNAME = "test_exasol${RANDOM_SUFFIX}"
+    }
+
+    stages {
+        stage('Clean') {
+            steps {
+                sh 'make mr-clean'
+            }
+        }
+        stage('Setup') {
+            steps {
+                sh 'make setup'
+            }
+        }
+        stage('Test') {
+            steps {
+                sh 'make conda-full-ci'
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'make post-ci-clean'
+            script {
+                archiveArtifacts artifacts: 'artefacts/**/*'
+                last_commiter = sh(returnStdout: true, script: "git log -1 --pretty=format:'%ae'").trim()
+                params = readYaml file: 'meta.yaml'
+                if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'devel') {
+                    recipients = last_commiter + ';' + params.mail_recipients.join(";")
+                } else {
+                    recipients = last_commiter
+                }
+                if (!env.CHANGE_TARGET) {
+                    emailext(
+                            attachmentsPattern: 'artefacts/test*.html',
+                            attachLog: true,
+                            compressLog: true,
+                            body: '''${SCRIPT, template="groovy-html.template"}''',
+                            mimeType: 'text/html',
+                            to: recipients,
+                            replyTo: 'abhishek_ku@yahoo.com',
+                            recipientProviders: [
+                                [$class: 'DevelopersRecipientProvider'],
+                                [$class: 'RequesterRecipientProvider']
+                            ],
+                            subject: "[${currentBuild.currentResult}] Build ${env.BUILD_NUMBER}, Job ${env.JOB_NAME}, COMMIT ${GIT_COMMIT}."
+                            )
+                }
+                junit 'artefacts/test*.xml'
+            }
+        }
+        success {
+            script {
+                if (env.CHANGE_TARGET) {
+                    // we are building a PR and can post PR comments
+                    postPrComment(comment: readFile('artefacts/pr-comment.md'), credentials: credentials)
+                }
+            }
+        }
+        unsuccessful {
+            script {
+                if (env.CHANGE_TARGET) {
+                    // we are building a PR and can post PR comments
+                    sh "tail -n 20 artefacts/console.log >> artefacts/pr-comment.md || true"
+                    postPrComment(comment: readFile('artefacts/pr-comment.md'), credentials: credentials)
+                }
+            }
+        }
+    }
+}
+
+def postPrComment(Map args) {
+    httpRequest(
+            httpMode: 'POST',
+            url: env.CHANGE_URL.replace("et/proj", "et/rest/api/1.0/proj").replace("/overview", "/comments"),
+            authentication: args.credentials,
+            contentType: 'APPLICATION_JSON',
+            responseHandle: 'NONE',
+            consoleLogResponseBody: true,
+            requestBody: groovy.json.JsonOutput.toJson([text: args.comment])
+            )
+}

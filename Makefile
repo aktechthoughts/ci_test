@@ -1,4 +1,5 @@
 setup:	conda-ci-setup environment
+full-ci:	info 
 
 SHELL := /bin/bash -o pipefail -o errexit
 # Folder for all the build artefacts to be archived by CI.

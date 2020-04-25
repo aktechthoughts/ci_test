@@ -53,3 +53,11 @@ environment:	install-exaplus
 install-exaplus:
 	$(call print_status_noprc,Installing EXAplus)
 	bash .ci/get_exaplus.sh
+
+info:
+	$(call print_status_noprc,Print/collect environment information)
+	conda info -a || true
+	pip list --format=columns || true
+	pip list --outdated || true
+	conda env export --file $(artefacts_path)/environment.yaml
+	(cd .ci/spotless && bash ./gradlew dependencyUpdate || true)

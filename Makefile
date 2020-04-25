@@ -9,7 +9,7 @@ pr_comment_file := $(artefacts_path)/pr-comment.md
 # Blenda branch to receive updates from
 CITEST_UPDATE_BRANCH := master
 ENVNAME := oa$(RANDOM_SUFFIX)
-TEST_CONDA_LOCATION := $(HOME)/conda_test
+TEST_CONDA_LOCATION := $(HOME)/ci_test
 
 mr-clean:
 	$(call print_status_noprc,Delete everything not known to git)

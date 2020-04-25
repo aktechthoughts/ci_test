@@ -42,3 +42,13 @@ conda-full-ci:
 	export PATH=$(TEST_CONDA_LOCATION)/bin:$$PATH; hash -r; \
 	source activate $(ENVNAME); \
 	make full-ci 2>&1 | tee -a $(artefacts_path)/console.log
+
+environment:	install-exaplus
+	$(call print_status,Creating environment)
+	export PATH=$(TEST_CONDA_LOCATION)/bin:$$PATH; hash -r; \
+	conda config --set always_yes yes --set changeps1 no; \
+	conda env create --name $(ENVNAME) --file .ci/environment.yml --force
+
+install-exaplus:
+	$(call print_status_noprc,Installing EXAplus)
+	bash .ci/get_exaplus.sh

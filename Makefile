@@ -30,3 +30,8 @@ conda-ci-setup:
 	conda config --set always_yes yes --set changeps1 no; \
 	# Useful for debugging any conda issues; \
 	conda info -a
+
+post-ci-clean:
+	export PATH=$(TEST_CONDA_LOCATION)/bin:$$PATH; hash -r; \
+	source deactivate; \
+	conda env remove -n $(ENVNAME) || true

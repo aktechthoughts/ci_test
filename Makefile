@@ -34,6 +34,7 @@ conda-ci-setup:
 
 post-ci-clean:
 	export PATH=$(TEST_CONDA_LOCATION)/bin:$$PATH; hash -r; \
+	conda init bash; \
 	conda deactivate; \
 	conda env remove -n $(ENVNAME) || true
 
@@ -46,7 +47,7 @@ conda-full-ci:
 
 environment:	install-exaplus
 	$(call print_status,Creating environment)
-	export PATH=$(TEST_CONDA_LOCATION)/bin:$PATH; hash -r; \
+	export PATH=$(TEST_CONDA_LOCATION)/bin:$$PATH; hash -r; \
 	conda config --set always_yes yes --set changeps1 no; \
 	conda env create --name $(ENVNAME) --file .ci/environment.yml --force
 

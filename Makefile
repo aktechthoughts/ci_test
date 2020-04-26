@@ -3,7 +3,8 @@ full-ci:	info
 
 SHELL := /bin/bash -o pipefail -o errexit
 # Folder for all the build artefacts to be archived by CI.
-artefacts_path := /tmp/artefacts
+artefacts_path := /var/lib/jenkins/ci_test/artefacts
+
 # File to collect information that is posted as PR comment
 pr_comment_file := $(artefacts_path)/pr-comment.md
 # Blenda branch to receive updates from

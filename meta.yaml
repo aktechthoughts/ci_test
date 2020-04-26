@@ -1,0 +1,8 @@
+name: OA_DEVOPS
+
+schemas:
+  - HUB_PROC
+  - HUB_STATS
+
+mail_recipients:
+   - abhishek_ku@yahoo.com

@@ -38,7 +38,7 @@ pipeline {
         always {
             sh 'make post-ci-clean'
             script {
-                archiveArtifacts artifacts: '/var/lib/jenkins/artefacts/**/*'
+                archiveArtifacts artifacts: 'artefacts/**/*'
                 last_commiter = sh(returnStdout: true, script: "git log -1 --pretty=format:'%ae'").trim()
                 params = readYaml file: 'meta.yaml'
                 if (env.BRANCH_NAME == 'master' || env.BRANCH_NAME == 'devel') {
@@ -48,7 +48,7 @@ pipeline {
                 }
                 if (!env.CHANGE_TARGET) {
                     emailext(
-                            attachmentsPattern: '/var/lib/jenkins/artefacts/test*.html',
+                            attachmentsPattern: 'artefacts/test*.html',
                             attachLog: true,
                             compressLog: true,
                             body: '''${SCRIPT, template="groovy-html.template"}''',
@@ -62,14 +62,14 @@ pipeline {
                             subject: "[${currentBuild.currentResult}] Build ${env.BUILD_NUMBER}, Job ${env.JOB_NAME}, COMMIT ${GIT_COMMIT}."
                             )
                 }
-                junit '/var/lib/jenkins/artefacts/test*.xml'
+                junit 'artefacts/test*.xml'
             }
         }
         success {
             script {
                 if (env.CHANGE_TARGET) {
                     // we are building a PR and can post PR comments
-                    postPrComment(comment: readFile('/var/lib/jenkins/artefacts/pr-comment.md'), credentials: credentials)
+                    postPrComment(comment: readFile('artefacts/pr-comment.md'), credentials: credentials)
                 }
             }
         }
@@ -77,8 +77,8 @@ pipeline {
             script {
                 if (env.CHANGE_TARGET) {
                     // we are building a PR and can post PR comments
-                    sh "tail -n 20 /var/lib/jenkins/artefacts/console.log >> /var/lib/jenkins/artefacts/pr-comment.md || true"
-                    postPrComment(comment: readFile('/var/lib/jenkins/artefacts/pr-comment.md'), credentials: credentials)
+                    sh "tail -n 20 artefacts/console.log >> artefacts/pr-comment.md || true"
+                    postPrComment(comment: readFile('artefacts/pr-comment.md'), credentials: credentials)
                 }
             }
         }

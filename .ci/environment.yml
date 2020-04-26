@@ -1,4 +1,4 @@
-name: oa
+name: ci_test
 channels:
   - conda-forge
 

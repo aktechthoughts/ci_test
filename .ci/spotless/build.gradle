@@ -1,0 +1,17 @@
+plugins {
+    id "com.diffplug.gradle.spotless" version "3.24.2"
+    id "com.github.ben-manes.versions" version "0.25.0"
+}
+
+spotless {
+    groovy {
+        target project.files('build.gradle', '../Jenkinsfile', '../Jenkinsfile-deploy-dev', '../Jenkinsfile-deploy-prod')
+        greclipse()
+        paddedCell() // avoid cyclic ambiguities
+        indentWithSpaces(4)
+    }
+    sql {
+        target '**/*.sql'
+        dbeaver()
+    }
+}

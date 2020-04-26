@@ -1,8 +1,8 @@
-name: OA_DEVOPS
+name: CI_TEST
 
 schemas:
-  - HUB_PROC
-  - HUB_STATS
+  - DEV_PROC
+  - DEV_STATS
 
 mail_recipients:
    - abhishek_ku@yahoo.com

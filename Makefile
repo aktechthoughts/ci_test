@@ -8,7 +8,7 @@ artefacts_path := artefacts
 pr_comment_file := $(artefacts_path)/pr-comment.md
 # Blenda branch to receive updates from
 CITEST_UPDATE_BRANCH := master
-ENVNAME := oa$(RANDOM_SUFFIX)
+ENVNAME := ci_test$(RANDOM_SUFFIX)
 TEST_CONDA_LOCATION := $(HOME)/ci_test
 
 mr-clean:

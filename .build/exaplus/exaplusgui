@@ -1,9 +1,0 @@
-#!/usr/bin/env perl
-
-use strict;
-use warnings;
-use FindBin;
-
-my @cmd = ("$FindBin::RealBin/exaplus", "-g");
-push @cmd, @ARGV;
-exec @cmd or die;

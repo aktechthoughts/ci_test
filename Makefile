@@ -3,7 +3,7 @@ full-ci:	info
 
 SHELL := /bin/bash -o pipefail -o errexit
 # Folder for all the build artefacts to be archived by CI.
-artefacts_path := /var/lib/jenkins/artefacts
+artefacts_path := artefacts
 # File to collect information that is posted as PR comment
 pr_comment_file := $(artefacts_path)/pr-comment.md
 # A branch to receive updates from

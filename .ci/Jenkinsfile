@@ -62,7 +62,7 @@ pipeline {
                     //         subject: "[${currentBuild.currentResult}] Build ${env.BUILD_NUMBER}, Job ${env.JOB_NAME}, COMMIT ${GIT_COMMIT}."
                     //         )
                 }
-                junit 'artefacts/test*.xml'
+                //junit 'artefacts/test*.xml'
             }
         }
         success {

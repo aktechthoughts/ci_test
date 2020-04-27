@@ -47,20 +47,20 @@ pipeline {
                     recipients = last_commiter
                 }
                 if (!env.CHANGE_TARGET) {
-                    emailext(
-                            attachmentsPattern: 'artefacts/test*.html',
-                            attachLog: true,
-                            compressLog: true,
-                            body: '''${SCRIPT, template="groovy-html.template"}''',
-                            mimeType: 'text/html',
-                            to: recipients,
-                            replyTo: 'abhishek_ku@yahoo.com',
-                            recipientProviders: [
-                                [$class: 'DevelopersRecipientProvider'],
-                                [$class: 'RequesterRecipientProvider']
-                            ],
-                            subject: "[${currentBuild.currentResult}] Build ${env.BUILD_NUMBER}, Job ${env.JOB_NAME}, COMMIT ${GIT_COMMIT}."
-                            )
+                    // emailext(
+                    //         attachmentsPattern: 'artefacts/test*.html',
+                    //         attachLog: true,
+                    //         compressLog: true,
+                    //         body: '''${SCRIPT, template="groovy-html.template"}''',
+                    //         mimeType: 'text/html',
+                    //         to: recipients,
+                    //         replyTo: 'abhishek_ku@yahoo.com',
+                    //         recipientProviders: [
+                    //             [$class: 'DevelopersRecipientProvider'],
+                    //             [$class: 'RequesterRecipientProvider']
+                    //         ],
+                    //         subject: "[${currentBuild.currentResult}] Build ${env.BUILD_NUMBER}, Job ${env.JOB_NAME}, COMMIT ${GIT_COMMIT}."
+                    //         )
                 }
                 junit 'artefacts/test*.xml'
             }

@@ -96,6 +96,17 @@ check-clean:
     exit 1; \
   fi
 
+
+style:
+	$(call print_status,Styling with black/beautysh/spotless)
+	find . -name "*.py" -exec black {} +
+	find . -name "*.sh" -exec beautysh --tab {} +
+	(cd .ci/spotless && bash ./gradlew spotlessGroovyApply)
+
+style-sql:
+	$(call print_status,Styling SQL with spotless/DBeaver)
+	(cd .ci/spotless && ln -s ../../ddl src && bash ./gradlew spotlessSqlApply)
+
 success:
 	$(call print_status,Success)  
 

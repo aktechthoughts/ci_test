@@ -9,14 +9,14 @@ pipeline {
         timestamps()
     }
 
-    agent {
-        node {
-            label 'aws-ec2'
-            customWorkspace '/home/ubuntu/jenkins'
-        }
-    }
+    // agent {
+    //     node {
+    //         label 'aws-ec2'
+    //         customWorkspace '/home/ubuntu/jenkins'
+    //     }
+    // }
 
-    // agent   any   
+    agent   any   
 
     environment {
         RANDOM_SUFFIX = sh(returnStdout: true, script: 'echo $RANDOM').trim()

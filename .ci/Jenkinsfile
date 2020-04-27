@@ -9,7 +9,11 @@ pipeline {
         timestamps()
     }
 
-    agent  { aws-ec2 }
+    agent {
+        node {
+            label 'aws-ec2'
+        }
+    }
 
     environment {
         RANDOM_SUFFIX = sh(returnStdout: true, script: 'echo $RANDOM').trim()

@@ -9,7 +9,7 @@ pipeline {
         timestamps()
     }
 
-    agent  any  
+    agent  { aws-ec2 }
 
     environment {
         RANDOM_SUFFIX = sh(returnStdout: true, script: 'echo $RANDOM').trim()

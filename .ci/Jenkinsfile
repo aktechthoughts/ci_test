@@ -12,6 +12,7 @@ pipeline {
     agent {
         node {
             label 'aws-ec2'
+            customWorkspace '/home/ubuntu/jenkins'
         }
     }
 

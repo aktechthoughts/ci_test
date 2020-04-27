@@ -76,7 +76,8 @@ pipeline {
             script {
                 if (env.CHANGE_TARGET) {
                     // we are building a PR and can post PR comments
-                    postPrComment(comment: readFile('artefacts/pr-comment.md'), credentials: credentials)
+                    //postPrComment(comment: readFile('artefacts/pr-comment.md'), credentials: credentials)
+                    sh "echo Success"
                 }
             }
         }
@@ -84,8 +85,9 @@ pipeline {
             script {
                 if (env.CHANGE_TARGET) {
                     // we are building a PR and can post PR comments
-                    sh "tail -n 20 artefacts/console.log >> artefacts/pr-comment.md || true"
-                    postPrComment(comment: readFile('artefacts/pr-comment.md'), credentials: credentials)
+                    //sh "tail -n 20 artefacts/console.log >> artefacts/pr-comment.md || true"
+                    //postPrComment(comment: readFile('artefacts/pr-comment.md'), credentials: credentials)
+                    sh "echo Failure"
                 }
             }
         }

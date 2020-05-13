@@ -3,3 +3,4 @@
 * Styling SQL with spotless/DBeaver
 * Styling with black/beautysh/spotless
 * Styling with black/beautysh/spotless
+* Styling with black/beautysh/spotless

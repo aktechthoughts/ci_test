@@ -16,7 +16,7 @@ pipeline {
     //     }
     // }
 
-    agent   any   
+    agent   any
 
     environment {
         RANDOM_SUFFIX = sh(returnStdout: true, script: 'echo $RANDOM').trim()

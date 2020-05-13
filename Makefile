@@ -34,6 +34,7 @@ conda-ci-setup:
 
 post-ci-clean:
 	export PATH=$(TEST_CONDA_LOCATION)/bin:$$PATH; hash -r; \
+	conda init bash; \	
 	conda deactivate; \
 	conda env remove -n $(ENVNAME) || true
 

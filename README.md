@@ -20,4 +20,4 @@ Development and deployment process is enabled by ci_test project.
 
 How to review a Pull Request
 
-Automated testing
+Automated testing added.

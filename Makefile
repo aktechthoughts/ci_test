@@ -56,9 +56,10 @@ install-exaplus:
 
 info:
 	$(call print_status_noprc,Print/collect environment information)
+	export PATH=$(TEST_CONDA_LOCATION)/bin:$$PATH; hash -r; \
 	conda info -a || true
 	pip list --format=columns || true
-	pip list --outdated || true
+	pip list --outdated || true \
 	conda env export --file $(artefacts_path)/environment.yaml
 	(cd .ci/spotless && bash ./gradlew dependencyUpdate || true)
 

@@ -15,8 +15,7 @@ Development team:
 
 # About the template
 
-Development and deployment process is enabled by ci_test.
-
+Development and deployment process is enabled by ci_test project.
 
 
 How to review a Pull Request

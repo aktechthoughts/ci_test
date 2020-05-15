@@ -5,4 +5,5 @@ schemas:
   - DEV_STATS
 
 mail_recipients:
+   - abhishek_ku@hotmail.co.uk
    - abhishek_ku@yahoo.com
